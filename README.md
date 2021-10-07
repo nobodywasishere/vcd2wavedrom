@@ -3,15 +3,24 @@
 Python script to transform a VCD file to [wavedrom](https://wavedrom.com/) format
 
 ```
-usage: vcd2wavedrom.py [-h] [--config CONFIGFILE] --input [INPUT] [--output [OUTPUT]]
+usage: vcd2wavedrom [-h] -i INPUT [-o OUTPUT] [-c CONFIGFILE] [-r SAMPLERATE] [-t MAXTIME] [-f OFFSET]
 
 Transform VCD to wavedrom
 
 optional arguments:
-  -h, --help           show this help message and exit
-  --config CONFIGFILE
-  --input [INPUT]
-  --output [OUTPUT]
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        Input VCD file
+  -o OUTPUT, --output OUTPUT
+                        Output Wavedrom file
+  -c CONFIGFILE, --config CONFIGFILE
+                        Config file
+  -r SAMPLERATE, --samplerate SAMPLERATE
+                        Sample rate of wavedrom (zoom level)
+  -t MAXTIME, --maxtime MAXTIME
+                        Length of time for wavedrom
+  -f OFFSET, --offset OFFSET
+                        Time offset from start of VCD
 ```
 
 ## Quickstart
@@ -36,7 +45,7 @@ You can select which signals are included in the wavedrom output by
 adding the signal name to this list. The resulting list is created in
 this order.
 
-### Repalce
+### Replace
 
 Raw values may be replaced by a more human readable text. See the
 example config file for an example.

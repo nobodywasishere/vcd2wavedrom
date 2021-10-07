@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import os
 import argparse
@@ -317,9 +319,18 @@ def vcd2wavedrom(auto):
 
 def main(argv):
     parser = argparse.ArgumentParser(description='Transform VCD to wavedrom')
-    parser.add_argument('--config', dest='configfile', required=False)
-    parser.add_argument('--input', nargs='?', dest='input', required=True)
-    parser.add_argument('--output', nargs='?', dest='output', required=False)
+    parser.add_argument('-i', '--input', dest='input', 
+        help="Input VCD file", required=True)
+    parser.add_argument('-o', '--output', dest='output', 
+        help="Output Wavedrom file")
+    parser.add_argument('-c', '--config', dest='configfile',
+        help="Config file")
+    parser.add_argument('-r', '--samplerate', dest='samplerate', type=int,
+        help="Sample rate of wavedrom (zoom level)")
+    parser.add_argument('-t', '--maxtime', dest='maxtime', type=int,
+        help="Length of time for wavedrom")
+    parser.add_argument('-f', '--offset', dest='offset', type=int,
+        help="Time offset from start of VCD")
 
     args = parser.parse_args(argv)
     args.input = os.path.abspath(os.path.join(os.getcwd(), args.input))
@@ -330,6 +341,10 @@ def main(argv):
 
     config['input'] = args.input
     config['output'] = args.output
+    if args.samplerate: 
+        config['samplerate'] = int(args.samplerate)
+    if args.maxtime: 
+        config['maxtime'] = int(args.maxtime)
     vcd2wavedrom(args.configfile is None)
 
 
