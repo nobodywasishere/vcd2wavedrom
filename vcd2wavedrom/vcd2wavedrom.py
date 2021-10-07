@@ -172,8 +172,9 @@ def homogenize_waves(vcd_dict, timescale):
 
 
 def includewave(wave):
-    if '__all__' in config['filter'] or \
-       wave in config['filter']:
+    if '__top__' in config['filter'] or config['top']:
+        return wave.count('.') <= 1
+    elif '__all__' in config['filter'] or wave in config['filter']:
         return True
     return False
 
@@ -326,11 +327,16 @@ def main(argv):
     parser.add_argument('-c', '--config', dest='configfile',
         help="Config file")
     parser.add_argument('-r', '--samplerate', dest='samplerate', type=int,
-        help="Sample rate of wavedrom (zoom level)")
+        help="Sample rate of wavedrom")
     parser.add_argument('-t', '--maxtime', dest='maxtime', type=int,
         help="Length of time for wavedrom")
     parser.add_argument('-f', '--offset', dest='offset', type=int,
         help="Time offset from start of VCD")
+    parser.add_argument('-z', '--hscale', dest='hscale', type=int,
+        help="Horizontal scale")
+    parser.add_argument('--top', dest='top', action="store_true", default=False,
+        help="Only output the top level signals")
+    
 
     args = parser.parse_args(argv)
     args.input = os.path.abspath(os.path.join(os.getcwd(), args.input))
@@ -341,10 +347,14 @@ def main(argv):
 
     config['input'] = args.input
     config['output'] = args.output
+    config['top'] = args.top
     if args.samplerate: 
-        config['samplerate'] = int(args.samplerate)
+        config['samplerate'] = args.samplerate
     if args.maxtime: 
-        config['maxtime'] = int(args.maxtime)
+        config['maxtime'] = args.maxtime
+    if args.hscale:
+        config['hscale'] = args.hscale
+
     vcd2wavedrom(args.configfile is None)
 
 

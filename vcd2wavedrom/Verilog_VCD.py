@@ -147,7 +147,10 @@ def parse_vcd(file, only_sigs=0, use_stdout=0, siglist=[], opt_timescale=''):
                 #   $var wire 4 ) addr [3:0] $end
                 ls = line.split()
                 _type = ls[1]
-                size = int(ls[2])
+                try:
+                    size = int(ls[2])
+                except:
+                    continue
                 code = ls[3]
                 name = "".join(ls[4:-1])
                 path = '.'.join(hier)
