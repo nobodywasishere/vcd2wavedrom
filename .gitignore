@@ -1,3 +1,4 @@
 *.svg
 *.drom
 __pycache__
+!example.svg

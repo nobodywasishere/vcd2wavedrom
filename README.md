@@ -1,9 +1,18 @@
 # vcd2wavedrom
 
-Python script to transform a VCD file to [wavedrom](https://wavedrom.com/) format
+This is a python script for transforming a VCD file into a 
+[wavedrom](https://wavedrom.com/). Requires 
+[vcdvcd](https://github.com/cirosantilli/vcdvcd) and Python 3. 
+Optionally requires [wavedrom-cli](https://github.com/wavedrom/cli) 
+for converting the wavedrom into an SVG.
+
+<img src="./examples/example.svg" style="background-color:white;padding:20px">
+
+## Usage
 
 ```
-usage: vcd2wavedrom [-h] -i INPUT [-o OUTPUT] [-c CONFIGFILE] [-r SAMPLERATE] [-t MAXTIME] [-f OFFSET]
+usage: vcd2wavedrom.py [-h] -i INPUT [-o OUTPUT] [-c CONFIGFILE] [-r SAMPLERATE] [-t MAXTIME]
+                       [-f OFFSET] [-z HSCALE] [--top]
 
 Transform VCD to wavedrom
 
@@ -16,11 +25,14 @@ optional arguments:
   -c CONFIGFILE, --config CONFIGFILE
                         Config file
   -r SAMPLERATE, --samplerate SAMPLERATE
-                        Sample rate of wavedrom (zoom level)
+                        Sample rate of wavedrom
   -t MAXTIME, --maxtime MAXTIME
                         Length of time for wavedrom
   -f OFFSET, --offset OFFSET
                         Time offset from start of VCD
+  -z HSCALE, --hscale HSCALE
+                        Horizontal scale
+  --top                 Only output the top level signals
 ```
 
 ## Quickstart
@@ -43,7 +55,9 @@ output. You can add here wavedrom parameters.
 
 You can select which signals are included in the wavedrom output by
 adding the signal name to this list. The resulting list is created in
-this order.
+this order. Putting `__all__` in this field will include all signals,
+and putting `__top__` will only include the top level signals (this will
+be messed up by entity names that have periods).
 
 ### Replace
 
