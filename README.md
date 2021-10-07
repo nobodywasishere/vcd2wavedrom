@@ -74,7 +74,9 @@ Should be set to clock period / resolution of simulation.
 
 ### Clocks
 
-List of clock signals (high level is replaced by clock edge symbol.
+List of clock signals (rising edge is replaced by clock edge symbol).
+Put `__auto__` to autodetect clocks by signals that have `clk` or `clock`
+in their name (case insensitive).
 
 ### Maxtime
 

@@ -94,7 +94,7 @@ def auto_config_waves(vcd_dict):
     """
 
     config['filter'] = ['__all__']
-    config['clocks'] = []
+    config['clocks'] = ['__auto__']
     config['signal'] = []
 
     for isig, wave in enumerate(vcd_dict):
@@ -179,7 +179,10 @@ def includewave(wave):
 
 
 def clockvalue(wave, digit):
-    if wave in config['clocks'] and digit == '1':
+    # This messes with the clock period, making it incorrect
+    if '__auto__' in config['clocks'] and ('clk' in wave.lower() or 'clock' in wave.lower()):
+        return 'P'
+    elif wave in config['clocks'] and digit == '1':
         return 'P'
     return digit
 
