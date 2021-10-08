@@ -2,3 +2,8 @@
 *.drom
 __pycache__
 !./examples/example.svg
+src
+vcdvcd-*.zip
+docs/vcd2wavedrom.py
+docs/vcdvcd.py
+docs/__pycache__

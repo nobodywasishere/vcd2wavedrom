@@ -1,1 +1,1 @@
-vcdvcd ~= 2.3.0
+-e git+https://github.com/nobodywasishere/vcdvcd#egg=vcdvcd

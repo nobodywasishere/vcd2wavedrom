@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.10.0/brython.min.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.10.0/brython_stdlib.js">
+    </script>
+    <script src="vcdvcd.py" type="text/python3"></script>
+    <script src="vcd2wavedrom.py" type="text/python3"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/skins/default.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wavedrom/2.6.8/wavedrom.min.js" type="text/javascript"></script>
+
+    <title>vcd2wavedrom</title>
+
+    <style>
+        html {
+            font-size: 16px;
+            height: 100%;
+        }
+    
+        .thing {
+            max-width: 1000px;
+            margin: auto;
+        }
+    
+        .text {
+            width: 99%;
+            font-family: monospace;
+        }
+        .WaveDrom svg {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body onload="brython()">
+
+    <script type="text/python">
+        from browser import bind, document, window
+    
+        from vcd2wavedrom import VCD2Wavedrom
+
+        
+        def generate(ev):
+            config = {}
+            if document['maxtime'].value != '':
+                config['maxtime'] = int(document['maxtime'].value)
+            if document['hscale'].value != '':
+                config['hscale'] = int(document['hscale'].value)
+            config['top'] = True
+            config['input_text'] = document['input'].value
+
+            vcd = VCD2Wavedrom(config)
+            drom = vcd.execute(True)
+            document['TheTextBox'].text = drom
+            document['InputJSON_0'].text = drom
+            try:
+                del document['WaveDrom_Display_0']
+            except:
+                pass
+            window.WaveDrom.ProcessAll()
+
+        
+        document["mybutton"].bind("click", generate)
+        </script>
+    
+    
+    <div class="thing">
+        <h1 style="text-align: center;">vcd2wavedrom</h1>
+        <p>The source code for this website is available <a href="https://github.com/nobodywasishere/vcd2wavedrom/">here</a>.
+        </p>
+        <hr><br>
+        <p>VCD input:</p>
+        <textarea id="input" class="text" cols="100" rows="10"></textarea>
+        <br><br>
+        <label>hscale</label> <input type="number" step="1" id="hscale">
+        <br><br>
+        <label>maxtime</label> <input type="number" step="1" id="maxtime">
+        <br><br>
+        <button id="mybutton">Generate</button>
+        <br><br>
+        <p>Wavedrom output:</p>
+        <textarea id="TheTextBox" class="text" cols="100" rows="10" readonly="True"></textarea>
+        <br><br>
+        <script id="InputJSON_0" type="WaveDrom"></script>
+        <br><br><br><br>
+    </div>
+
+</body>
+
+</html>
