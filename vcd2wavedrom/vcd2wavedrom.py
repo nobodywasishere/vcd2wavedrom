@@ -285,7 +285,7 @@ class VCD2Wavedrom:
         return drom
 
     def execute(self, auto):
-        vcd = VCDVCD(self.config['input'])
+        vcd = VCDVCD(vcd_string=self.config['input_text'])
         timescale = int(vcd.timescale['magnitude'])
         vcd_dict = {}
         vcd_dict_types = {}
@@ -335,6 +335,7 @@ def main(argv):
             config.update(json.load(json_file))
 
     config['input'] = args.input
+    config['input_text'] = open(args.input, 'r').read()
     config['output'] = args.output
     config['top'] = args.top
     if args.samplerate: 
