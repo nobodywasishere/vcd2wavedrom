@@ -40,14 +40,14 @@
 
     <script type="text/python">
         from browser import bind, document, window
+        import json
     
         from vcd2wavedrom import VCD2Wavedrom
 
-        
         def generate(ev):
             config = {}
-            if document['maxtime'].value != '':
-                config['maxtime'] = int(document['maxtime'].value)
+            # if document['maxtime'].value != '':
+            #     config['maxtime'] = int(document['maxtime'].value)
             if document['hscale'].value != '':
                 config['hscale'] = int(document['hscale'].value)
             config['top'] = True
@@ -55,7 +55,7 @@
 
             vcd = VCD2Wavedrom(config)
             drom = vcd.execute(True)
-            document['TheTextBox'].text = drom
+            document['TheTextBox'].text = json.dumps(drom, indent=4)
             document['InputJSON_0'].text = drom
             try:
                 del document['WaveDrom_Display_0']
@@ -74,16 +74,16 @@
         </p>
         <hr><br>
         <p>VCD input:</p>
-        <textarea id="input" class="text" cols="100" rows="10"></textarea>
+        <textarea id="input" class="text" cols="100" rows="15"></textarea>
         <br><br>
         <label>hscale</label> <input type="number" step="1" id="hscale">
-        <br><br>
-        <label>maxtime</label> <input type="number" step="1" id="maxtime">
+        <!-- <br><br> -->
+        <!-- <label>maxtime</label> <input type="number" step="1" id="maxtime"> -->
         <br><br>
         <button id="mybutton">Generate</button>
         <br><br>
         <p>Wavedrom output:</p>
-        <textarea id="TheTextBox" class="text" cols="100" rows="10" readonly="True"></textarea>
+        <textarea id="TheTextBox" class="text" cols="100" rows="15" readonly="True"></textarea>
         <br><br>
         <script id="InputJSON_0" type="WaveDrom"></script>
         <br><br><br><br>
