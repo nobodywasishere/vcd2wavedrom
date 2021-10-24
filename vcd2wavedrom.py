@@ -99,6 +99,8 @@ class VCD2Wavedrom:
 
         for isig, wave in enumerate(vcd_dict):
             wave_points = vcd_dict[wave]
+            if len(wave_points) == 0:
+                raise Exception(f"Signal {wave} is empty!")
             wave_first_point = wave_points[0]
             wave_first_time = wave_first_point[0]
             if (startTime < 0) or (wave_first_time < startTime):
